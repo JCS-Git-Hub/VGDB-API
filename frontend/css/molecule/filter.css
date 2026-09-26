@@ -1,0 +1,4 @@
+.m-filters {
+    display: grid;
+    gap: var(--space-3);
+}

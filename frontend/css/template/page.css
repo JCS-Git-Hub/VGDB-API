@@ -1,0 +1,12 @@
+.t-page {
+    min-height: 100vh;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}

@@ -1,0 +1,17 @@
+.a-message {
+    min-height: 1.5rem;
+    margin: var(--space-4) 0;
+    font-weight: 700;
+}
+
+.a-message--success {
+    color: var(--color-success);
+}
+
+.a-message--error {
+    color: var(--color-danger);
+}
+
+.a-message--loading {
+    color: var(--color-warning);
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>GameHub API</title>
+        
+        <link rel="stylesheet" href="./css/style.css">
+        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+        <script type="module" src="./js/main.js"></script>
+    </head>
+
+<body class="t-page p-gamehub">
+    <header class="o-header">
+        <div class="o-header__content">
+            <h1 class="a-heading a-heading--main">GameHub API</h1>
+            <p class="a-text a-text--light">
+                Catálogo de videojuegos y categorías
+            </p>
+        </div>
+    </header>
+
+    <main class="t-container">
+        <section class="o-section">
+            <h2 class="a-heading">Crear videojuego</h2>
+
+            <form id="game-form" class="m-form">
+                <input
+                    class="a-input"
+                    type="text"
+                    id="title"
+                    placeholder="Título"
+                    required
+                >
+
+                <input
+                    class="a-input"
+                    type="text"
+                    id="developer"
+                    placeholder="Desarrolladora"
+                    required
+                >
+
+                <input
+                    class="a-input"
+                    type="number"
+                    id="release-year"
+                    placeholder="Año"
+                    required
+                >
+
+                <!-- <input
+                    class="a-input"
+                    type="number"
+                    id="price"
+                    placeholder="Precio"
+                    min="0"
+                    step="0.01"
+                    required
+                > -->
+
+                <select
+                    class="a-select"
+                    id="category-id"
+                    required
+                >
+                    <option value="">
+                        Selecciona una categoría
+                    </option>
+                </select>
+
+                <button
+                    class="a-button a-button--primary"
+                    type="submit"
+                >
+                    Guardar videojuego
+                </button>
+            </form>
+        </section>
+
+        <section class="o-section">
+            <div class="m-section-header">
+                <div>
+                    <h2 class="a-heading">Videojuegos</h2>
+                    <p class="a-text">
+                        Consulta y filtra el catálogo disponible.
+                    </p>
+                </div>
+            </div>
+
+            <div class="m-filters">
+                <input
+                    class="a-input"
+                    type="search"
+                    id="search"
+                    placeholder="Buscar por título"
+                >
+
+                <select
+                    class="a-select"
+                    id="filter-category"
+                >
+                    <option value="">
+                        Todas las categorías
+                    </option>
+                </select>
+            </div>
+
+            <p id="message" class="a-message"></p>
+
+            <div
+                id="games-list"
+                class="o-games-grid"
+            ></div>
+        </section>
+
+        <section class="o-section">
+            <h2 class="a-heading">Documentación</h2>
+
+            <p class="a-text">
+                Prueba también la API desde
+                <a
+                    class="a-link"
+                    href="http://127.0.0.1:8000/docs"
+                    target="_blank"
+                >
+                    Swagger UI
+                </a>.
+            </p>
+
+            <pre class="a-code">
+GET /api/games
+POST /api/games
+PUT /api/games/{id}
+DELETE /api/games/{id}</pre>
+        </section>
+    </main>
+</body>
+</html>

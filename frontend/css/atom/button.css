@@ -1,0 +1,37 @@
+.a-button {
+    min-height: 46px;
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+    border-radius: var(--radius-small);
+    color: white;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.a-button:hover {
+    transform: translateY(-1px);
+}
+
+.a-button:active {
+    transform: translateY(0);
+}
+
+.a-button--primary {
+    background-color: var(--color-primary);
+}
+
+.a-button--primary:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.a-button--danger {
+    background-color: #dc2626;
+}
+
+.a-button--danger:hover {
+    background-color: #b91c1c;
+}

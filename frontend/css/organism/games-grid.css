@@ -1,0 +1,4 @@
+.o-games-grid {
+    display: grid;
+    gap: var(--space-4);
+}

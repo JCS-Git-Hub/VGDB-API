@@ -1,0 +1,9 @@
+.a-code {
+    overflow-x: auto;
+    padding: var(--space-4);
+    border-radius: var(--radius-small);
+    color: #ddd6fe;
+    background-color: #0f172a;
+    font-family: monospace;
+    line-height: 1.7;
+}

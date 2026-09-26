@@ -1,0 +1,16 @@
+
+.o-header {
+    padding: var(--space-7) var(--space-4);
+    background:
+        linear-gradient(
+            135deg,
+            #312e81,
+            #7c3aed
+        );
+}
+
+.o-header__content {
+    width: min(100%, 1100px);
+    margin: 0 auto;
+    text-align: center;
+}

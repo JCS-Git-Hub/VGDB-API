@@ -1,0 +1,26 @@
+
+@media (min-width: 600px) {
+    .m-filters {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+@media (min-width: 760px) {
+    .m-form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .m-form .a-button {
+        grid-column: span 2;
+    }
+
+    .o-games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    .o-games-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

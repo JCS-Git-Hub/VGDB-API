@@ -1,0 +1,23 @@
+.a-heading {
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+    color: var(--color-text);
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+.a-heading--main {
+    margin-bottom: var(--space-2);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.a-text {
+    margin-top: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+.a-text--light {
+    margin-bottom: 0;
+    color: var(--color-text);
+}
