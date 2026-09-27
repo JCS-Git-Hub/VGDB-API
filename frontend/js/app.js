@@ -41,10 +41,15 @@ export const app = {
                 dom.gamesList
             );
 
+            const count = games.length;
+            const noun = count === 1 ? "videojuego" : "videojuegos";
+            const adjective = count === 1 ? "encontrado" : "encontrados";
+
             ui.showMessage(
-                `${games.length} videojuegos cargados.`,
+                `${count} ${noun} ${adjective}.`,
                 "success"
             );
+
         } catch (error) {
             this.handleError(
                 error,
