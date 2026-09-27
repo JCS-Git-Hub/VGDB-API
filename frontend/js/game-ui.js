@@ -33,11 +33,6 @@ export const gameUI = {
                 </p>
 
                 <p class="m-game-card__data">
-                    <strong>Precio:</strong>
-                    ${Number(game.price).toFixed(2)} €
-                </p>
-
-                <p class="m-game-card__data">
                     <strong>Categoría:</strong>
                     ${this.escapeHtml(game.category.name)}
                 </p>

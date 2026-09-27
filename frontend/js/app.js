@@ -62,9 +62,6 @@ export const app = {
             release_year: Number(
                 dom.releaseYearInput.value
             ),
-            price: Number(
-                dom.priceInput.value
-            ),
             category_id: Number(
                 dom.categorySelect.value
             )

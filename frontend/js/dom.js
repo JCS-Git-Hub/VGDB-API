@@ -21,7 +21,5 @@ export const dom = {
 
     releaseYearInput: document.querySelector(
         "#release-year"
-    ),
-
-    // priceInput: document.querySelector("#price")
+    )
 };
