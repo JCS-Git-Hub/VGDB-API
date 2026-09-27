@@ -7,7 +7,6 @@ class GameBase(BaseModel):
     title: str = Field(min_length=2, max_length=120)
     developer: str = Field(min_length=2, max_length=120)
     release_year: int = Field(ge=1950, le=2100)
-    # price: float = Field(ge=0)
     category_id: int = Field(gt=0)
 
 

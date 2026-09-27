@@ -11,7 +11,6 @@ class Game(Base):
     title = Column(String(120), nullable=False, index=True)
     developer = Column(String(120), nullable=False)
     release_year = Column(Integer, nullable=False)
-    # price = Column(Float, nullable=False)
     category_id = Column(
         Integer,
         ForeignKey("categories.id"),
