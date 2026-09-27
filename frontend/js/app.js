@@ -12,7 +12,7 @@ export const app = {
             categoryUI.renderSelectOptions(categories);
         } catch (error) {
             ui.showMessage(
-                "No se pudieron cargar las categorías.",
+                "No se pudieron cargar los géneros.",
                 "error"
             );
         }

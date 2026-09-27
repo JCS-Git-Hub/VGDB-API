@@ -4,13 +4,13 @@ export const categoryUI = {
     renderSelectOptions(categories) {
         dom.categorySelect.innerHTML = `
             <option value="">
-                Selecciona una categoría
+                Selecciona un género
             </option>
         `;
 
         dom.filterCategory.innerHTML = `
             <option value="">
-                Todas las categorías
+                Todos los géneros
             </option>
         `;
 

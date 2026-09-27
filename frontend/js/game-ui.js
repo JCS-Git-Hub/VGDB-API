@@ -33,7 +33,7 @@ export const gameUI = {
                 </p>
 
                 <p class="m-game-card__data">
-                    <strong>Categoría:</strong>
+                    <strong>Género:</strong>
                     ${this.escapeHtml(game.category.name)}
                 </p>
 

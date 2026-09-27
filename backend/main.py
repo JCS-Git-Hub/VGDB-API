@@ -10,7 +10,7 @@ app = FastAPI(
     title="GameHub API",
     description=(
         "API REST para gestionar videojuegos "
-        "y categorías"
+        "y géneros"
     ),
     version="1.0.0"
 )

@@ -33,7 +33,7 @@ def create_category(
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="La categoría ya existe"
+            detail="El género ya existe"
         )
 
     category = Category(**category_data.model_dump())
@@ -72,7 +72,7 @@ def get_category(
     if not category:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Categoría no encontrada"
+            detail="Género no encontrado"
         )
 
     return category
@@ -96,7 +96,7 @@ def update_category(
     if not category:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Categoría no encontrada"
+            detail="Género no encontrado"
         )
 
     for field, value in category_data.model_dump().items():
@@ -125,14 +125,14 @@ def delete_category(
     if not category:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Categoría no encontrada"
+            detail="Género no encontrado"
         )
 
     if category.games:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=(
-                "No se puede eliminar una categoría "
+                "No se puede eliminar un género "
                 "que contiene videojuegos"
             )
         )

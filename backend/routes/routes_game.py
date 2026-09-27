@@ -29,7 +29,7 @@ def create_game(
     if not category:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="La categoría indicada no existe"
+            detail="El género indicado no existe"
         )
 
     game = Game(**game_data.model_dump())
@@ -129,7 +129,7 @@ def update_game(
     if not category:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="La nueva categoría no existe"
+            detail="El nuevo género no existe"
         )
 
     for field, value in game_data.model_dump().items():
