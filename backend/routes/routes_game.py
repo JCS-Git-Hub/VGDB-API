@@ -11,36 +11,6 @@ router = APIRouter(
 )
 
 
-@router.post(
-    "",
-    response_model=GameResponse,
-    status_code=status.HTTP_201_CREATED
-)
-def create_game(
-    game_data: GameCreate,
-    db: Session = Depends(get_db)
-):
-    category = (
-        db.query(Category)
-        .filter(Category.id == game_data.category_id)
-        .first()
-    )
-
-    if not category:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El género indicado no existe"
-        )
-
-    game = Game(**game_data.model_dump())
-
-    db.add(game)
-    db.commit()
-    db.refresh(game)
-
-    return game
-
-
 @router.get(
     "",
     response_model=list[GameResponse]
@@ -73,6 +43,36 @@ def get_games(
         .limit(limit)
         .all()
     )
+
+
+@router.post(
+    "",
+    response_model=GameResponse,
+    status_code=status.HTTP_201_CREATED
+)
+def create_game(
+    game_data: GameCreate,
+    db: Session = Depends(get_db)
+):
+    category = (
+        db.query(Category)
+        .filter(Category.id == game_data.category_id)
+        .first()
+    )
+
+    if not category:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El género indicado no existe"
+        )
+
+    game = Game(**game_data.model_dump())
+
+    db.add(game)
+    db.commit()
+    db.refresh(game)
+
+    return game
 
 
 @router.get(
