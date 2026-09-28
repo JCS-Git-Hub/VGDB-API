@@ -27,6 +27,15 @@ export const api = {
         return response.data;
     },
 
+    async editGame(id, game) {
+        const response = await axios.put(
+            `${API_URL}/games/${id}`,
+            game
+        );
+
+        return response.data;
+    },
+
     async deleteGame(id) {
         await axios.delete(
             `${API_URL}/games/${id}`

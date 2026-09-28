@@ -5,6 +5,9 @@ import { categoryUI } from "./category-ui.js";
 import { gameUI } from "./game-ui.js";
 
 export const app = {
+    games: [],
+    editingGameId: null,
+
     async loadCategories() {
         try {
             const categories = await api.getCategories();
@@ -36,20 +39,26 @@ export const app = {
 
             const games = await api.getGames(params);
 
+            this.games = games;
+
             gameUI.renderGames(
                 games,
                 dom.gamesList
             );
 
             const count = games.length;
-            const noun = count === 1 ? "videojuego" : "videojuegos";
-            const adjective = count === 1 ? "encontrado" : "encontrados";
+            const noun = count === 1
+                ? "videojuego"
+                : "videojuegos";
+
+            const adjective = count === 1
+                ? "encontrado"
+                : "encontrados";
 
             ui.showMessage(
                 `${count} ${noun} ${adjective}.`,
                 "success"
             );
-
         } catch (error) {
             this.handleError(
                 error,
@@ -63,32 +72,84 @@ export const app = {
 
         const game = {
             title: dom.titleInput.value.trim(),
+
             developer: dom.developerInput.value.trim(),
+
             release_year: Number(
                 dom.releaseYearInput.value
             ),
+
             category_id: Number(
                 dom.categorySelect.value
             )
         };
 
+        const isEditing =
+            this.editingGameId !== null;
+
         try {
-            await api.createGame(game);
+            if (isEditing) {
+                await api.editGame(
+                    this.editingGameId,
+                    game
+                );
+
+                ui.showMessage(
+                    "Videojuego actualizado correctamente.",
+                    "success"
+                );
+            } else {
+                await api.createGame(game);
+
+                ui.showMessage(
+                    "Videojuego creado correctamente.",
+                    "success"
+                );
+            }
+
+            this.editingGameId = null;
 
             dom.gameForm.reset();
 
-            ui.showMessage(
-                "Videojuego creado correctamente.",
-                "success"
-            );
+            this.updateSubmitButton();
 
             await this.loadGames();
         } catch (error) {
             this.handleError(
                 error,
-                "No se pudo crear el videojuego."
+                isEditing
+                    ? "No se pudo actualizar el videojuego."
+                    : "No se pudo crear el videojuego."
             );
         }
+    },
+
+    async handleEditGame(id) {
+        const game = this.games.find(
+            game => String(game.id) === String(id)
+        );
+
+        if (!game) {
+            ui.showMessage(
+                "No se encontró el videojuego.",
+                "error"
+            );
+
+            return;
+        }
+
+        this.editingGameId = game.id;
+
+        dom.titleInput.value = game.title;
+        dom.developerInput.value = game.developer;
+        dom.releaseYearInput.value = game.release_year;
+
+        dom.categorySelect.value =
+            game.category_id ?? game.category?.id ?? "";
+
+        this.updateSubmitButton();
+
+        dom.titleInput.focus();
     },
 
     async handleDeleteGame(id) {
@@ -117,6 +178,49 @@ export const app = {
         }
     },
 
+    cancelEdit() {
+        this.editingGameId = null;
+
+        dom.gameForm.reset();
+
+        this.updateSubmitButton();
+    },
+
+    updateSubmitButton() {
+        const isEditing =
+            this.editingGameId !== null;
+
+        const submitButton =
+            dom.gameForm.querySelector(
+                'button[type="submit"]'
+            );
+
+        const cancelButton =
+            dom.gameForm.querySelector(
+                '[data-action="cancel-edit"]'
+            );
+
+        const formTitle = document.querySelector(
+            "#game-form-title"
+        );
+
+        if (formTitle) {
+            formTitle.textContent = isEditing
+                ? "Editar videojuego"
+                : "Añadir videojuego";
+        }
+
+        if (submitButton) {
+            submitButton.textContent = isEditing
+                ? "Guardar cambios"
+                : "Guardar videojuego";
+        }
+
+        if (cancelButton) {
+            cancelButton.hidden = !isEditing;
+        }
+    },
+
     handleError(error, defaultMessage) {
         const detail = error.response?.data?.detail;
 
@@ -133,6 +237,18 @@ export function registerEvents() {
         event => app.handleGameSubmit(event)
     );
 
+    const cancelButton =
+        dom.gameForm.querySelector(
+            '[data-action="cancel-edit"]'
+        );
+
+    if (cancelButton) {
+        cancelButton.addEventListener(
+            "click",
+            () => app.cancelEdit()
+        );
+    }
+
     dom.searchInput.addEventListener(
         "input",
         () => app.loadGames()
@@ -147,7 +263,7 @@ export function registerEvents() {
         "click",
         event => {
             const button = event.target.closest(
-                '[data-action="delete"]'
+                "button[data-action]"
             );
 
             if (!button) {
@@ -155,8 +271,15 @@ export function registerEvents() {
             }
 
             const gameId = button.dataset.gameId;
+            const action = button.dataset.action;
 
-            app.handleDeleteGame(gameId);
+            if (action === "edit") {
+                app.handleEditGame(gameId);
+            }
+
+            if (action === "delete") {
+                app.handleDeleteGame(gameId);
+            }
         }
     );
 }
