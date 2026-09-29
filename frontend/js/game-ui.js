@@ -39,7 +39,7 @@ export const gameUI = {
 
                 <div class="m-game-card__actions">
                     <button
-                        class="a-button"
+                        class="a-button a-button--secondary"
                         data-action="edit"
                         data-game-id="${game.id}"
                     >

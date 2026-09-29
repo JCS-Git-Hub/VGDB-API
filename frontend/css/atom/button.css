@@ -28,6 +28,14 @@
     background-color: var(--color-primary-dark);
 }
 
+.a-button--secondary {
+    background-color: var(--color-secondary);
+}
+
+.a-button--secondary:hover {
+    background-color: var(--color-secondary-dark);
+}
+
 .a-button--danger {
     background-color: #dc2626;
 }
