@@ -1,143 +1,83 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from backend.database.database import get_db
-from ..model import Category
 from ..schema import (
     CategoryCreate,
     CategoryResponse,
     CategoryUpdate
 )
+from ..controller.controller_category import (
+    create_category,
+    get_categories,
+    get_category,
+    update_category,
+    delete_category
+)
 
 router = APIRouter(
     prefix="/api/categories",
-    tags=["Categories"]
+    tags=["Géneros"]
 )
+
+
+@router.get(
+    "",
+    response_model=list[CategoryResponse],
+    summary="Consulta la lista de géneros"
+)
+def get_categories_route(
+    db: Session = Depends(get_db)
+):
+    return get_categories(db)
 
 
 @router.post(
     "",
     response_model=CategoryResponse,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
+    summary="Crea un género"
 )
-def create_category(
+def create_category_route(
     category_data: CategoryCreate,
     db: Session = Depends(get_db)
 ):
-    existing = (
-        db.query(Category)
-        .filter(Category.name == category_data.name)
-        .first()
-    )
-
-    if existing:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El género ya existe"
-        )
-
-    category = Category(**category_data.model_dump())
-
-    db.add(category)
-    db.commit()
-    db.refresh(category)
-
-    return category
-
-
-@router.get(
-    "",
-    response_model=list[CategoryResponse]
-)
-def get_categories(
-    db: Session = Depends(get_db)
-):
-    return db.query(Category).order_by(Category.name).all()
+    return create_category(db, category_data)
 
 
 @router.get(
     "/{category_id}",
-    response_model=CategoryResponse
+    response_model=CategoryResponse,
+    summary="Consulta un género"
 )
-def get_category(
+def get_category_route(
     category_id: int,
     db: Session = Depends(get_db)
 ):
-    category = (
-        db.query(Category)
-        .filter(Category.id == category_id)
-        .first()
-    )
-
-    if not category:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Género no encontrado"
-        )
-
-    return category
+    return get_category(db, category_id)
 
 
 @router.put(
     "/{category_id}",
-    response_model=CategoryResponse
+    response_model=CategoryResponse,
+    summary="Modifica un género"
 )
-def update_category(
+def update_category_route(
     category_id: int,
     category_data: CategoryUpdate,
     db: Session = Depends(get_db)
 ):
-    category = (
-        db.query(Category)
-        .filter(Category.id == category_id)
-        .first()
-    )
-
-    if not category:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Género no encontrado"
-        )
-
-    for field, value in category_data.model_dump().items():
-        setattr(category, field, value)
-
-    db.commit()
-    db.refresh(category)
-
-    return category
+    return update_category(db, category_id, category_data)
 
 
 @router.delete(
     "/{category_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Elimina un género"
 )
-def delete_category(
+def delete_category_route(
     category_id: int,
     db: Session = Depends(get_db)
 ):
-    category = (
-        db.query(Category)
-        .filter(Category.id == category_id)
-        .first()
-    )
-
-    if not category:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Género no encontrado"
-        )
-
-    if category.games:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=(
-                "No se puede eliminar un género "
-                "que contiene videojuegos"
-            )
-        )
-
-    db.delete(category)
-    db.commit()
-
+    delete_category(db, category_id)
     return None

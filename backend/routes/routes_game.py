@@ -1,167 +1,89 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy.orm import Session, joinedload
+from fastapi import APIRouter, Depends, Query, status
+from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..model import Category, Game
 from ..schema import GameCreate, GameResponse, GameUpdate
+from ..controller.controller_game import (
+    create_game,
+    delete_game,
+    get_game,
+    get_games,
+    update_game,
+)
 
 router = APIRouter(
     prefix="/api/games",
-    tags=["Games"]
+    tags=["Videojuegos"]
 )
 
 
 @router.get(
     "",
-    response_model=list[GameResponse]
+    response_model=list[GameResponse],
+    summary="Consula la lista de videojuegos"
 )
-def get_games(
+def read_games(
     search: str | None = Query(default=None),
     category_id: int | None = Query(default=None, gt=0),
     skip: int = Query(default=0, ge=0),
     limit: int = Query(default=10, ge=1, le=100),
     db: Session = Depends(get_db)
 ):
-    query = (
-        db.query(Game)
-        .options(joinedload(Game.category))
-    )
-
-    if search:
-        query = query.filter(
-            Game.title.ilike(f"%{search}%")
-        )
-
-    if category_id:
-        query = query.filter(
-            Game.category_id == category_id
-        )
-
-    return (
-        query.order_by(Game.id.desc())
-        .offset(skip)
-        .limit(limit)
-        .all()
+    return get_games(
+        db=db,
+        search=search,
+        category_id=category_id,
+        skip=skip,
+        limit=limit
     )
 
 
 @router.post(
     "",
     response_model=GameResponse,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
+    summary="Crea un videojuego"
 )
-def create_game(
+def add_game(
     game_data: GameCreate,
     db: Session = Depends(get_db)
 ):
-    category = (
-        db.query(Category)
-        .filter(Category.id == game_data.category_id)
-        .first()
-    )
-
-    if not category:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El género indicado no existe"
-        )
-
-    game = Game(**game_data.model_dump())
-
-    db.add(game)
-    db.commit()
-    db.refresh(game)
-
-    return game
+    return create_game(db, game_data)
 
 
 @router.get(
     "/{game_id}",
-    response_model=GameResponse
+    response_model=GameResponse,
+    summary="Consulta un videojuego"
 )
-def get_game(
+def read_game(
     game_id: int,
     db: Session = Depends(get_db)
 ):
-    game = (
-        db.query(Game)
-        .options(joinedload(Game.category))
-        .filter(Game.id == game_id)
-        .first()
-    )
-
-    if not game:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Videojuego no encontrado"
-        )
-
-    return game
+    return get_game(db, game_id)
 
 
 @router.put(
     "/{game_id}",
-    response_model=GameResponse
+    response_model=GameResponse,
+    summary="Modifica un videojuego"
 )
-def update_game(
+def edit_game(
     game_id: int,
     game_data: GameUpdate,
     db: Session = Depends(get_db)
 ):
-    game = (
-        db.query(Game)
-        .filter(Game.id == game_id)
-        .first()
-    )
-
-    if not game:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Videojuego no encontrado"
-        )
-
-    category = (
-        db.query(Category)
-        .filter(Category.id == game_data.category_id)
-        .first()
-    )
-
-    if not category:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El nuevo género no existe"
-        )
-
-    for field, value in game_data.model_dump().items():
-        setattr(game, field, value)
-
-    db.commit()
-    db.refresh(game)
-
-    return game
+    return update_game(db, game_id, game_data)
 
 
 @router.delete(
     "/{game_id}",
-    status_code=status.HTTP_204_NO_CONTENT
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Elimina un videojuego"
 )
-def delete_game(
+def remove_game(
     game_id: int,
     db: Session = Depends(get_db)
 ):
-    game = (
-        db.query(Game)
-        .filter(Game.id == game_id)
-        .first()
-    )
-
-    if not game:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Videojuego no encontrado"
-        )
-
-    db.delete(game)
-    db.commit()
-
+    delete_game(db, game_id)
     return None
