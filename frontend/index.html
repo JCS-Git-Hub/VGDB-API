@@ -28,55 +28,67 @@
             <h2 id="game-form-title" class="a-heading">Añadir videojuego</h2>
 
             <form id="game-form" class="m-form">
-                <input
-                    class="a-input"
-                    type="text"
-                    id="title"
-                    placeholder="Título"
-                    required
-                >
+                <div class="m-field">
+                    <label class="a-label" for="title">Título</label>
+                    <input
+                        class="a-input"
+                        type="text"
+                        id="title"
+                        placeholder="Introduce un título"
+                        required
+                    >
+                </div>
+                
+                <div class="m-field">
+                    <label class="a-label" for="developer">Desarrolladora</label>
+                    <input
+                        class="a-input"
+                        type="text"
+                        id="developer"
+                        placeholder="Introduce una desarrolladora"
+                        required
+                    >
+                </div>
 
-                <input
-                    class="a-input"
-                    type="text"
-                    id="developer"
-                    placeholder="Desarrolladora"
-                    required
-                >
-
-                <input
+                <div class="m-field">
+                    <label class="a-label" for="release-year">Fecha de lanzamiento</label>
+                    <input
                     class="a-input"
                     type="number"
                     id="release-year"
-                    placeholder="Año"
+                    placeholder="Introduce un año"
                     min="1947"
                     max="2026"
                     required
-                >
-
-                <select
+                    >
+                </div>
+                
+                <div class="m-field">
+                    <label class="a-label" for="category-id">Género</label>
+                    <select
                     class="a-select"
                     id="category-id"
                     required
-                >
-                    <option value="">
-                        Selecciona un género
-                    </option>
-                </select>
+                    >
+                        <option value="">
+                            Selecciona un género
+                        </option>
+                    </select>
+                </div>
 
                 <button
                     class="a-button a-button--primary"
                     type="submit"
-                >
+                    >
                     Guardar videojuego
                 </button>
-
+                
                 <button
                     type="button"
                     class="a-button a-button--secondary"
                     data-action="cancel-edit"
                     hidden
-                >
+                    >
                     Cancelar cambios
                 </button>
             </form>
@@ -97,7 +109,7 @@
                     class="a-input"
                     type="search"
                     id="search"
-                    placeholder="Buscar por título"
+                    placeholder="Introduce un Buscar por título"
                 >
 
                 <select
@@ -129,7 +141,7 @@
                     target="_blank"
                 >
                     Swagger UI</a>
-                    
+
                 o a través de la siguiente dirección:
             </p>
 

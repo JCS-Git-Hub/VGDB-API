@@ -2,6 +2,7 @@
 @import "./variable.css";
 
 @import "./atom/typography.css";
+@import "./atom/label.css";
 @import "./atom/input.css";
 @import "./atom/button.css";
 @import "./atom/link.css";

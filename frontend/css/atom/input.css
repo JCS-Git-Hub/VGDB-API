@@ -13,7 +13,14 @@
         box-shadow 0.2s ease;
 }
 
-.a-input::placeholder {
+.a-select option,
+.a-select:valid {
+    color: var(--color-text);
+}
+
+.a-input::placeholder,
+.a-select:invalid,
+.a-select option[value=""] {
     color: #94a3b8;
 }
 
