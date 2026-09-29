@@ -105,21 +105,28 @@
             </div>
 
             <div class="m-filters">
-                <input
-                    class="a-input"
-                    type="search"
-                    id="search"
-                    placeholder="Introduce un Buscar por título"
-                >
+                <div class="m-field">
+                    <label class="a-label">Título</label>
+                        <input
+                        class="a-input"
+                        type="search"
+                        id="search"
+                        placeholder="Introduce un título"
+                        >
+                    </label>
+                </div>
 
-                <select
-                    class="a-select"
-                    id="filter-category"
-                >
-                    <option value="">
-                        Todos los géneros
-                    </option>
-                </select>
+                <div class="m-field">
+                    <label class="a-label">Género</label>
+                        <select
+                        class="a-select"
+                        id="filter-category"
+                        >
+                            <option value="">
+                                Todos los géneros
+                            </option>
+                        </select>
+                </div>
             </div>
 
             <p id="message" class="a-message"></p>
