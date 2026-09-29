@@ -122,21 +122,32 @@
             <h2 class="a-heading">Documentación</h2>
 
             <p class="a-text">
-                Prueba también la API desde
+                También puedes probar la API desde
                 <a
                     class="a-link"
                     href="http://127.0.0.1:8000/docs"
                     target="_blank"
                 >
-                    Swagger UI
-                </a>.
+                    Swagger UI</a>
+                    
+                o a través de la siguiente dirección:
             </p>
 
-            <pre class="a-code">
-GET /api/games
-POST /api/games
-PUT /api/games/{id}
-DELETE /api/games/{id}</pre>
+            <p class="a-code">
+                http://127.0.0.1:8000/docs
+            </p>
+
+            <p>
+                Para acceder a los contenidos de la base de datos, introduce una de las siguientes líneas en el navegador:
+            </p>
+
+            <p class="a-code">
+                http://127.0.0.1:8000/api/categories<br>
+                http://127.0.0.1:8000/api/categories/{category_id}<br>
+                <br>
+                http://127.0.0.1:8000/api/games<br>
+                http://127.0.0.1:8000/api/games/{game_id}
+            </p>
         </section>
     </main>
 </body>
